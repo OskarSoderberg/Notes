@@ -9,5 +9,5 @@ A note app with basic functionality
 
 ## Potential improvements
  - Duplicate notes are not saved
- - Notes are not sorted. Actually the order change when reloading app
+ - Notes are not sorted. In fact, the order of notes change when reloading app
  

@@ -1,9 +1,9 @@
 package com.example.notes
 
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -59,6 +59,10 @@ class MainActivity : AppCompatActivity(), NoteClickInterface {
                 noteItems.add("Tap to edit, hold to delete!")
             } else {
                 noteItems = set.toMutableList()
+                for (position in 0 until noteItems.size) {
+                    // Fixes a whitespace bug
+                    noteItems[position] = noteItems[position].trim()
+                }
             }
         }
         noteAdapter.submitList(noteItems)
@@ -66,12 +70,13 @@ class MainActivity : AppCompatActivity(), NoteClickInterface {
 
     private fun saveData() {
         val sharedPref = applicationContext.getSharedPreferences(R.string.save_key.toString(),Context.MODE_PRIVATE)
-        val set = HashSet<String>(MainActivity.noteItems)
+        val set = HashSet<String>(noteItems)
         sharedPref.edit().putStringSet("notes", set).apply()
+
     }
 
     private fun editNote(position: Int) {
-        val note = noteAdapter.getItem(position)
+        val note = noteAdapter.getNoteAt(position)
         val intent = Intent(this, EditNoteActivity::class.java).apply {
             putExtra(EXTRA_NOTE, note)
             putExtra(EXTRA_ID, position)
@@ -94,10 +99,8 @@ class MainActivity : AppCompatActivity(), NoteClickInterface {
         val builder = AlertDialog.Builder(this)
         builder.setTitle(R.string.delete_title)
             .setMessage(R.string.delete_message)
-            .setPositiveButton(R.string.delete_yes, DialogInterface.OnClickListener { _, _
-                -> deleteNote(position) })
-            .setNegativeButton(R.string.delete_no, DialogInterface.OnClickListener { _, _
-                -> })
+            .setPositiveButton(R.string.delete_yes) { _, _ -> deleteNote(position) }
+            .setNegativeButton(R.string.delete_no) { _, _ -> }
         builder.show()
         return true
     }

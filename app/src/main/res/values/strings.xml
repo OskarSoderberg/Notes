@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">Notes</string>
     <string name="delete_title">Delete note?</string>
-    <string name="delete_message">Any deleted notes can\'t be restored.</string>
+    <string name="delete_message">Deleted notes can\'t be restored.</string>
     <string name="delete_yes">Yes</string>
     <string name="delete_no">No</string>
     <string name="save_key">com.example.notes.SAVE_KEY</string>
-    <string name="empty_note_hint">Type your note here...</string>
+    <string name="empty_note_hint">Type your note here…</string>
 </resources>
